@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dayscape</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- Orbes ambiants -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ── ONBOARDING ── -->
+<div id="screen-onboarding" class="screen active">
+  <div class="ob-top">
+    <div class="ob-badge">✦ Nouveau · Chaque jour</div>
+    <div class="ob-title">Day<span>scape</span></div>
+    <p class="ob-sub">Un prompt créatif par jour. Exprime-toi. Ton journal prend vie.</p>
+  </div>
+
+  <div class="ob-cards">
+    <div class="ob-card">
+      <div class="ob-icon">✍️</div>
+      <div class="ob-card-text">
+        <strong>Un prompt quotidien</strong>
+        <span>Une question, une image, une émotion — chaque jour est unique</span>
+      </div>
+    </div>
+    <div class="ob-card">
+      <div class="ob-icon">🎨</div>
+      <div class="ob-card-text">
+        <strong>Exprime-toi librement</strong>
+        <span>Texte, photo, couleur — à ta façon</span>
+      </div>
+    </div>
+    <div class="ob-card">
+      <div class="ob-icon">📖</div>
+      <div class="ob-card-text">
+        <strong>Ton journal vivant</strong>
+        <span>Chaque mois devient une œuvre visuelle</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ob-bottom">
+    <button class="btn-primary" id="btn-start">Commencer →</button>
+  </div>
+</div>
+
+<!-- ── AUTH ── -->
+<div id="screen-auth" class="screen">
+  <div class="auth-wrap">
+    <div class="auth-header">
+      <h1>Bienvenue 👋</h1>
+      <p>Connecte-toi pour commencer ton journal</p>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab active" id="tab-login">Connexion</button>
+      <button class="tab" id="tab-signup">Inscription</button>
+    </div>
+
+    <div class="input-group">
+      <input class="inp" id="auth-email" type="email" placeholder="ton@email.com"/>
+      <input class="inp" id="auth-password" type="password" placeholder="Mot de passe"/>
+    </div>
+
+    <button class="btn-primary" id="auth-submit-btn">Se connecter</button>
+
+    <div class="divider"><span>ou</span></div>
+
+    <button class="btn-ghost" id="btn-google">
+      <svg class="g-logo" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Continuer avec Google
+    </button>
+  </div>
+</div>
+
+<!-- ── HOME ── -->
+<div id="screen-home" class="screen">
+  <div class="home-header">
+    <div class="greeting-row">
+      <div>
+        <div class="greeting-sub" id="greeting-date"></div>
+        <div class="greeting-name" id="greeting-name">Bonjour 👋</div>
+      </div>
+      <div class="avatar" id="user-avatar">🎨</div>
+    </div>
+    <div class="streak-pill">🔥 <span id="streak-count">0</span> jours de suite</div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-label">✦ Prompt du jour</div>
+    <div class="prompt-text" id="daily-prompt">Chargement...</div>
+    <div class="prompt-meta">Catégorie · Introspection · 2 min</div>
+  </div>
+
+  <div class="section-title">Actions rapides</div>
+  <div class="quick-actions">
+    <button class="qa-btn" id="btn-go-editor">
+      <div class="qa-icon">✍️</div>
+      <div class="qa-label">Écrire</div>
+      <div class="qa-sub">Répondre au prompt</div>
+    </button>
+    <button class="qa-btn" id="btn-go-journal">
+      <div class="qa-icon">📖</div>
+      <div class="qa-label">Journal</div>
+      <div class="qa-sub">Voir mes entrées</div>
+    </button>
+    <button class="qa-btn" id="btn-go-profile">
+      <div class="qa-icon">⚡</div>
+      <div class="qa-label">Stats</div>
+      <div class="qa-sub">Mes progrès</div>
+    </button>
+  </div>
+
+  <div class="section-title">Ce mois-ci</div>
+  <div class="mini-calendar" id="mini-cal"></div>
+</div>
+
+<!-- ── EDITOR ── -->
+<div id="screen-editor" class="screen">
+  <div class="editor-header">
+    <button class="back-btn" id="btn-back-editor">←</button>
+    <div class="editor-title">Mon entrée du jour</div>
+  </div>
+
+  <div class="editor-prompt">
+    <div class="prompt-label">✦ Prompt du jour</div>
+    <p id="editor-prompt-text">Chargement...</p>
+  </div>
+
+  <div class="mood-row">
+    <div class="mood-label">Comment tu te sens ?</div>
+    <div class="mood-pills">
+      <button class="mood-pill" data-mood="✨">✨ Inspiré</button>
+      <button class="mood-pill" data-mood="🔥">🔥 Motivé</button>
+      <button class="mood-pill" data-mood="💜">💜 Calme</button>
+      <button class="mood-pill" data-mood="🌊">🌊 Pensif</button>
+      <button class="mood-pill" data-mood="🌙">🌙 Rêveur</button>
+    </div>
+  </div>
+
+  <textarea class="editor-area" id="entry-text"
+    placeholder="Écris librement... il n'y a pas de mauvaise réponse ✨"
+    rows="6"></textarea>
+
+  <div class="img-upload-zone" id="upload-zone">
+    <div class="upload-icon">🖼️</div>
+    <div class="upload-text">Ajouter une image</div>
+    <div class="upload-sub">Cloudinary · max 10 MB</div>
+    <input type="file" id="img-input" accept="image/*" style="display:none"/>
+  </div>
+  <div id="img-preview" style="display:none;">
+    <img id="preview-img" style="width:100%;border-radius:16px;margin-top:-8px;" alt="preview"/>
+  </div>
+
+  <button class="btn-primary" id="btn-save-entry">Publier mon entrée ✦</button>
+</div>
+
+<!-- ── JOURNAL ── -->
+<div id="screen-journal" class="screen">
+  <div class="journal-header">
+    <h2>Mon journal 📖</h2>
+    <p id="journal-meta">Chargement...</p>
+  </div>
+  <div class="month-grid" id="month-grid"></div>
+  <div class="section-title">Entrées récentes</div>
+  <div id="entries-list"></div>
+</div>
+
+<!-- ── PROFILE ── -->
+<div id="screen-profile" class="screen">
+  <div class="profile-card">
+    <div class="profile-avatar" id="profile-avatar">🎨</div>
+    <div class="profile-name" id="profile-name">—</div>
+    <div class="profile-email" id="profile-email">—</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num green" id="stat-streak">0</div>
+      <div class="stat-label">Streak</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num violet" id="stat-entries">0</div>
+      <div class="stat-label">Entrées</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num pink" id="stat-months">0</div>
+      <div class="stat-label">Mois</div>
+    </div>
+  </div>
+
+  <button class="btn-ghost" id="btn-logout">🚪 Se déconnecter</button>
+</div>
+
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav" id="bottom-nav" style="display:none;">
+  <button class="nav-item active" data-screen="home">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Accueil</span>
+  </button>
+  <button class="nav-item" data-screen="editor">
+    <span class="nav-icon">✍️</span>
+    <span class="nav-label">Écrire</span>
+  </button>
+  <button class="nav-item" data-screen="journal">
+    <span class="nav-icon">📖</span>
+    <span class="nav-label">Journal</span>
+  </button>
+  <button class="nav-item" data-screen="profile">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Profil</span>
+  </button>
+</nav>
+
+<!-- Firebase SDK -->
+<script type="module" src="js/firebase-init.js"></script>
+<!-- App -->
+<script type="module" src="js/app.js"></script>
+<!-- Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
+
+</body>
+</html>
