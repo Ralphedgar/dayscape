@@ -1,6 +1,6 @@
 // ── cloudinary.js ──
 
-const CLOUD_NAME   = "CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@djipggbf";    // ← remplace
+const CLOUD_NAME   = "djipggbf";    // ← remplace
 const UPLOAD_PRESET = "dayscape-uploads"; // ← remplace si différent
 
 // ── Upload d'une image vers Cloudinary ──
